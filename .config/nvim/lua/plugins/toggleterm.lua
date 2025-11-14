@@ -31,6 +31,14 @@ return {
         start_in_insert = true,
       })
 
+      local lazygit_float_term = Terminal:new({
+        direction = "float",
+        side = 50,
+        hidden = true,
+        start_in_insert = true,
+        cmd = "lazygit",
+      })
+
       -- keymaps fo custom terminals
       vim.keymap.set("n", "<leader>tf", function()
         float_term:toggle()
@@ -39,6 +47,11 @@ return {
       vim.keymap.set("n", "<leader>tv", function()
         vertical_term:toggle()
       end, { desc = "Open vertical terminal" })
+
+      -- custom terminal to lazygit
+      vim.keymap.set("n", "<leader>tl", function()
+        lazygit_float_term:toggle()
+      end, { desc = "Open lazygit on float terminal" })
 
       vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Quit Toggleterm terminal" })
     end,
