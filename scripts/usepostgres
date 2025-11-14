@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# only postgres
+# sudo systemctl start postgresql
+# sudo systemctl stop postgresql
+#
+# prevents from start with the system
+# sudo systemctl disable postgresql
+#
+#----------------------------------
+# only apache
+# sudo systemctl start apache2
+# sudo systemctl stop apache2
+#
+# prevents from start with the system
+# sudo systemctl disable apache2
+#
+# ---------------------------------
+# check status
+# sudo systemctl status postgresql
+# sudo systemctl status apache2
+
+start() {
+  sudo systemctl start apache2
+  sudo systemctl start postgresql
+}
+
+status() {
+  sudo systemctl status postgresql
+  sudo systemctl status apache2
+}
+
+stop() {
+  sudo systemctl stop postgresql
+  sudo systemctl stop apache2
+}
+
+check() {
+  echo "testing command OK"
+}
+
+help() {
+  echo "commands: start | status | stop | check"
+}
+
+"$@"
