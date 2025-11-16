@@ -33,7 +33,10 @@ return {
 
       local lazygit_float_term = Terminal:new({
         direction = "float",
-        side = 50,
+        float_opts = {
+          width = vim.o.columns,
+          height = 100,
+        },
         hidden = true,
         start_in_insert = true,
         cmd = "lazygit",
