@@ -21,7 +21,6 @@
 # sudo systemctl status apache2
 
 start() {
-  sudo systemctl start apache2
   sudo systemctl start postgresql
 }
 
@@ -35,12 +34,16 @@ stop() {
   sudo systemctl stop apache2
 }
 
+startPgadmin() {
+  sudo systemctl start apache2
+}
+
 check() {
   echo "testing command OK"
 }
 
 help() {
-  echo "commands: start | status | stop | check"
+  echo "commands: start | status | stop | check | startPgadmin"
 }
 
 "$@"

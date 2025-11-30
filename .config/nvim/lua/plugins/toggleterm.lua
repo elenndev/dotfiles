@@ -56,7 +56,8 @@ return {
         lazygit_float_term:toggle()
       end, { desc = "Open lazygit on float terminal" })
 
-      vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Quit Toggleterm terminal" })
+      vim.keymap.set("t", "<leader>tq", [[<C-\><C-n>:q<CR>]], { desc = "Quit Toggleterm terminal" })
+      vim.keymap.set("t", "<leader>ta", [[<C-\><C-n>]], { desc = "Go to Normal mode" })
     end,
   },
 }
