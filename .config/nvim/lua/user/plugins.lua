@@ -21,7 +21,7 @@ return require("lazy").setup({
   "nvim-lua/plenary.nvim",
 
   -- mason
-  require("user.plugins.mason"),
+ -- require("user.plugins.mason"),
 
   -- Treesitter
   require("user.plugins.treesitter"),
@@ -45,6 +45,9 @@ return require("lazy").setup({
     end,
   },
 
+  -- lsp
+  require("user.plugins.lsp"),
+
   --  Neo-tree file explorer
   require("user.plugins.neotree"),
 
@@ -53,6 +56,9 @@ return require("lazy").setup({
 
   -- Key binding helper
   require("user.plugins.whichkey"),
+
+  -- visual stuff
+  require("user.plugins.ui"),
 
 
   -- Theme

@@ -11,10 +11,10 @@ return {
     ts_configs.setup({
       ensure_installed = {
         "lua", "vim", "vimdoc", "javascript", "typescript", "python",
-        "rust", "go", "html", "css", "json", "yaml", "toml",
+        "rust", "html", "css", "json", "yaml", "toml",
         "markdown", "bash"
       },
-      auto_install = true,
+      auto_install = false,
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,

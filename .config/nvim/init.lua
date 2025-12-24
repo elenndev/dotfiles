@@ -28,13 +28,8 @@ local function safe_require(module)
 end
 
 -- Then use it for loading modules
-local treesitter = safe_require("user.plugins.treesitter")
+-- local treesitter = safe_require("user.plugins.treesitter")
 
-require("mason").setup()
+-- require("mason").setup()
 
-vim.cmd([[
-  augroup TreesitterInstall
-    autocmd!
-    autocmd VimEnter * TSInstall lua vim vimdoc javascript typescript python rust go html css json yaml toml markdown bash
-  augroup END
-]])
+

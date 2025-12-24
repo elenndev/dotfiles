@@ -1,62 +1,35 @@
 return {
-    -- Mason
-    {
-        "williamboman/mason.nvim",
-        lazy = false,
-        config = function()
-            require("mason").setup()
-        end,
-    },
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  priority = 100,
+  config = function()
+    local ok, ts_configs = pcall(require, "nvim-treesitter.configs")
+    if not ok then
+      return
+    end
 
-    -- Mason LSPConfig
-    {
-        "williamboman/mason-lspconfig.nvim",
-        lazy = false,
-        opts = {
-            auto_install = true,
+    ts_configs.setup({
+      ensure_installed = {
+        "lua", "vim", "vimdoc", "javascript", "typescript", "python",
+        "rust", "html", "css", "json", "yaml", "toml",
+        "markdown", "bash"
+      },
+      auto_install = false,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      indent = {
+        enable = true,
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<CR>",
+          node_incremental = "<CR>",
+          node_decremental = "<BS>",
         },
-    },
-
-    -- LSPConfig
-    {
-        "neovim/nvim-lspconfig",
-        lazy = false,
-        dependencies = {
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-        },
-        config = function()
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            local lspconfig = require("nvim-lspconfig")
-
-            -- TypeScript / JavaScript
-            lspconfig.ts_ls.setup({ capabilities = capabilities })
-
-            -- ESLint
-            lspconfig.eslint.setup({
-                on_attach = function(client, bufnr)
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        buffer = bufnr,
-                        command = "EslintFixAll",
-                    })
-                end,
-                capabilities = capabilities,
-            })
-
-            -- Lua
-            lspconfig.lua_ls.setup({
-                capabilities = capabilities,
-                settings = {
-                    Lua = {
-                        diagnostics = { globals = { "vim" } },
-                    },
-                },
-            })
-
-            -- HTML / CSS
-            lspconfig.html.setup({ capabilities = capabilities })
-            lspconfig.cssls.setup({ capabilities = capabilities })
-        end,
-    },
+      },
+    })
+  end,
 }
-
