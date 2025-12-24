@@ -49,6 +49,7 @@ return require("lazy").setup({
 
   -- lsp
   require("user.plugins.lsp"),
+require("user.plugins.lspsaga"),
 
   --  Neo-tree file explorer
   require("user.plugins.neotree"),
