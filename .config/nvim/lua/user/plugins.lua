@@ -26,6 +26,7 @@ return require("lazy").setup({
   -- Treesitter
   require("user.plugins.treesitter"),
 	require("user.plugins.autotag"),
+	require("user.plugins.autopairs"),
 
   -- Toggleeterm
   require("user.plugins.toggleterm"),
