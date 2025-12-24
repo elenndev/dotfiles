@@ -25,6 +25,9 @@ return require("lazy").setup({
 
   -- Treesitter
   require("user.plugins.treesitter"),
+
+  -- Toggleeterm
+  require("user.plugins.toggleterm"),
   
 
   -- autocomplete.lua -> Completion
