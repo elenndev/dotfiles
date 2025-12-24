@@ -25,6 +25,7 @@ return require("lazy").setup({
 
   -- Treesitter
   require("user.plugins.treesitter"),
+	require("user.plugins.autotag"),
 
   -- Toggleeterm
   require("user.plugins.toggleterm"),
@@ -59,13 +60,16 @@ return require("lazy").setup({
 
   -- visual stuff
   require("user.plugins.ui"),
+require("user.plugins.themes"),
 
 
   -- Theme
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-  },
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  -- priority = 0,
+  --   -- priority = 1000,
+  -- },
+
 })
 
