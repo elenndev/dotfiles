@@ -59,6 +59,9 @@ return require("lazy").setup({
   -- Key binding helper
   require("user.plugins.whichkey"),
 
+-- tabs
+require("user.plugins.bufferline"),
+
   -- visual stuff
   require("user.plugins.ui"),
 require("user.plugins.themes"),
