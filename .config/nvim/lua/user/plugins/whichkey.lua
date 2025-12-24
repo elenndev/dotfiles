@@ -1,85 +1,56 @@
 return {
-    {
-        "folke/which-key.nvim",
-        lazy = false,
-        config = function()
-            -- Check if which-key is available
-            local has_which_key, which_key = pcall(require, "which-key")
-            if not has_which_key then
-                print("Warning: which-key not found. Key binding help won't be available.")
-                return
-            end
+  {
+    "folke/which-key.nvim",
+    lazy = false,
+    config = function()
+      local ok, which_key = pcall(require, "which-key")
+      if not ok then return end
 
-            -- Set up which-key with error handling
-            local setup_ok, _ = pcall(which_key.setup, {
-                plugins = {
-                    marks = true,
-                    registers = true,
-                    spelling = {
-                        enabled = true,
-                        suggestions = 20,
-                    },
-                    presets = {
-                        operators = true,
-                        motions = true,
-                        text_objects = true,
-                        windows = true,
-                        nav = true,
-                        z = true,
-                        g = true,
-                    },
-                },
-                window = {
-                    border = "rounded",
-                    padding = { 2, 2, 2, 2 },
-                },
-                layout = {
-                    height = { min = 4, max = 25 },
-                    width = { min = 20, max = 50 },
-                },
-                ignore_missing = false,
-            })
+      which_key.setup({
+        plugins = {
+          marks = true,
+          registers = true,
+          spelling = { enabled = true, suggestions = 20 },
+          presets = {
+            operators = true,
+            motions = true,
+            text_objects = true,
+            windows = true,
+            nav = true,
+            z = true,
+            g = true,
+          },
+        },
+        layout = { height = { min = 4, max = 25 }, width = { min = 20, max = 50 } },
+        win = { border = "rounded", padding = { 2, 2, 2, 2 } },
+      })
 
-            if not setup_ok then
-                print("Error setting up which-key. Key binding help won't work correctly.")
-                return
-            end
+      local mappings = {
+        { "<leader>b", group = "Buffer" },
+        { "<leader>bd", desc = "<cmd>bdelete<cr>" },
+        { "<leader>bn", desc = "<cmd>bnext<cr>" },
+        { "<leader>bp", desc = "<cmd>bprevious<cr>" },
 
-            -- Register key bindings
-            local register_ok, _ = pcall(which_key.register, {
-                f = {
-                    name = "File",
-                    f = { "<cmd>Telescope find_files<cr>", "Find File" },
-                    r = { "<cmd>Telescope oldfiles<cr>", "Recent Files" },
-                    g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
-                    b = { "<cmd>Telescope buffers<cr>", "Buffers" },
-                    n = { "<cmd>enew<cr>", "New File" },
-                },
-                e = { "<cmd>Neotree toggle<cr>", "Explorer" },
-                l = {
-                    name = "LSP",
-                    d = { "<cmd>Telescope lsp_definitions<cr>", "Definitions" },
-                    r = { "<cmd>Telescope lsp_references<cr>", "References" },
-                    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-                    f = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
-                    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
-                    R = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-                },
-                b = {
-                    name = "Buffer",
-                    n = { "<cmd>bnext<cr>", "Next Buffer" },
-                    p = { "<cmd>bprevious<cr>", "Previous Buffer" },
-                    d = { "<cmd>bdelete<cr>", "Delete Buffer" },
-                },
-            }, { prefix = "<leader>" })
+        { "<leader>e", desc = "<cmd>Neotree toggle<cr>" },
 
-            if not register_ok then
-                print("Error registering which-key bindings.")
-                return
-            end
+        { "<leader>f", group = "File" },
+        { "<leader>fb", desc = "<cmd>Telescope buffers<cr>" },
+        { "<leader>ff", desc = "<cmd>Telescope find_files<cr>" },
+        { "<leader>fg", desc = "<cmd>Telescope live_grep<cr>" },
+        { "<leader>fn", desc = "<cmd>enew<cr>" },
+        { "<leader>fr", desc = "<cmd>Telescope oldfiles<cr>" },
 
-            print("Key binding help initialized!")
-        end,
-    }
+        { "<leader>l", group = "LSP" },
+        { "<leader>lR", desc = "<cmd>lua vim.lsp.buf.rename()<cr>" },
+        { "<leader>la", desc = "<cmd>lua vim.lsp.buf.code_action()<cr>" },
+        { "<leader>ld", desc = "<cmd>Telescope lsp_definitions<cr>" },
+        { "<leader>lf", desc = "<cmd>lua vim.lsp.buf.format()<cr>" },
+        { "<leader>lh", desc = "<cmd>lua vim.lsp.buf.hover()<cr>" },
+        { "<leader>lr", desc = "<cmd>Telescope lsp_references<cr>" },
+      }
+
+      which_key.register(mappings)
+    end
+  }
 }
 
