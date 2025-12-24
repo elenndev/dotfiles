@@ -67,14 +67,8 @@ require("user.plugins.bufferline"),
   require("user.plugins.ui"),
 require("user.plugins.themes"),
 
-
-  -- Theme
-  -- {
-  --   "catppuccin/nvim",
-  --   name = "catppuccin",
-  -- priority = 0,
-  --   -- priority = 1000,
-  -- },
+-- aquela amg performatica
+require("user.plugins.presence"),
 
 })
 
