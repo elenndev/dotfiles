@@ -59,6 +59,7 @@ require("user.plugins.lspsaga"),
 
   -- Key binding helper
   require("user.plugins.whichkey"),
+require("user.plugins.showkeys"),
 
 -- tabs
 require("user.plugins.bufferline"),
