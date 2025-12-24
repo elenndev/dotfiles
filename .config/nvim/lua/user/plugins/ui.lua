@@ -24,7 +24,12 @@ return {
         lualine_c = { { "filename", path = 1 } },
         lualine_x = { "diagnostics", "encoding", "filetype" },
         lualine_y = { "progress" },
-        lualine_z = { "location" },
+				        lualine_z = {
+function ()
+return os.date("%H:%M")
+end,
+				},
+
       },
 
       inactive_sections = {
