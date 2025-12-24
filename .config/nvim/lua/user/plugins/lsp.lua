@@ -1,35 +1,100 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  priority = 100,
-  config = function()
-    local ok, ts_configs = pcall(require, "nvim-treesitter.configs")
-    if not ok then
-      return
-    end
+  {
+    "neovim/nvim-lspconfig", 
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+    },
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      -- Mason
+      require("mason").setup()
 
-    ts_configs.setup({
-      ensure_installed = {
-        "lua", "vim", "vimdoc", "javascript", "typescript", "python",
-        "rust", "html", "css", "json", "yaml", "toml",
-        "markdown", "bash"
-      },
-      auto_install = false,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = {
-        enable = true,
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<CR>",
-          node_incremental = "<CR>",
-          node_decremental = "<BS>",
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "pyright",
+          "rust_analyzer",
+          "clangd",
         },
-      },
-    })
-  end,
+      })
+
+      -- Capabilities
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+      if ok then
+        capabilities = cmp_lsp.default_capabilities(capabilities)
+      end
+
+      -- Keymaps on attach
+      local function on_attach(_, bufnr)
+        local opts = { buffer = bufnr, silent = true }
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+      end
+
+      vim.lsp.config.lua_ls = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            runtime = { version = "LuaJIT" },
+            diagnostics = { globals = { "vim" } },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+          },
+        },
+      }
+
+      vim.lsp.config.ts_ls = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      vim.lsp.config.pyright = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      vim.lsp.config.rust_analyzer = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      vim.lsp.config.gopls = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      vim.lsp.config.clangd = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      -- Auto-start servers
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local server = vim.lsp.config[vim.bo[args.buf].filetype]
+          if server then
+            vim.lsp.start(server)
+          end
+        end,
+      })
+
+      -- Diagnostics UI
+      vim.diagnostic.config({
+        virtual_text = true,
+        float = { border = "rounded" },
+        signs = true,
+      })
+    end,
+  },
 }
+
