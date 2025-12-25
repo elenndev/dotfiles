@@ -18,11 +18,18 @@ return {
                 window = {
                     position = "left",
                     width = 30,
+		    mappings = {
+        ["l"] = "open",
+        ["h"] = "close_node",
+        ["<CR>"] = "open",
+        ["v"] = "open_vsplit",
+        ["s"] = "open_split",
+      },
                 },
                 sources = { "filesystem", "buffers", "git_status" },
             })
 
-            -- Keymap para abrir/fechar o Neo-tree
+            -- toggle  Neotree 
             vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
         end,
     },
