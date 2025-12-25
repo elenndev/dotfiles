@@ -52,9 +52,6 @@ require("user.plugins.lspsaga"),
   --  Neo-tree file explorer
   require("user.plugins.neotree"),
 
--- code lines
-require("user.plugins.linenumbers"),
-
    -- telescope
   require("user.plugins.telescope"),
 
