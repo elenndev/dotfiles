@@ -45,46 +45,61 @@ return {
     end,
   },
 
-  -- Line numbers
-  -- {
-    -- "shrynx/line-numbers.nvim",
-    -- opts = {}, 
-  -- },
-
-  -- status col
+  -- Status column with line numbers, folds, and signs
   {
-  "luukvbaal/statuscol.nvim",
-  config = function()
-    vim.opt.number = true
-    vim.opt.relativenumber = true
-    -- highlight cursor line
-    vim.opt.cursorline = true
-    local builtin = require("statuscol.builtin")
-    require("statuscol").setup({
-      relculright = true, -- números relativos à direita
+    "luukvbaal/statuscol.nvim",
+    config = function()
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      vim.opt.cursorline = true  -- highlight current line
 
-      segments = {
-        -- fold column
-        { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = true, -- números relativos à direita
 
-        -- diagnostic signs
-        {
-          sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
-          click = "v:lua.ScSa",
+        segments = {
+          -- fold column
+          { text = { builtin.foldfunc }, click = nil },
+
+          -- diagnostic signs
+          {
+            sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
+            click = nil,
+          },
+
+          -- line numbers
+          { text = { builtin.lnumfunc }, click = nil },
+
+          -- other signs (Git, LSP, etc.)
+          {
+            sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+            click = nil,
+          },
         },
+      })
+    end,
+  },
 
-        -- line numbers
-        { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+  -- Barbecue - breadcrumbs
+	-- not working fix later
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    opts = {
+     -- here your config
+      attach_navic = true, -- connect nvim-navic
+      show_dirname = true,
+      show_basename = true,
+      theme = "auto",
+    },
+  },
 
-        -- other signs (Git, LSP, etc.)
-        {
-          sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-          click = "v:lua.ScSa",
-        },
-      },
-    })
-  end,
-}
-
+  -- indentation GUIDES
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 }
 
