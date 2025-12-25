@@ -20,8 +20,6 @@ return require("lazy").setup({
   -- Essential plugins
   "nvim-lua/plenary.nvim",
 
-  -- mason
- -- require("user.plugins.mason"),
 
   -- Treesitter
   require("user.plugins.treesitter"),
@@ -53,6 +51,9 @@ require("user.plugins.lspsaga"),
 
   --  Neo-tree file explorer
   require("user.plugins.neotree"),
+
+-- code lines
+require("user.plugins.linenumbers"),
 
    -- telescope
   require("user.plugins.telescope"),
