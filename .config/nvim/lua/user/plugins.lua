@@ -22,8 +22,9 @@ return require("lazy").setup({
 
 	-- Treesitter
 	require("user.plugins.treesitter"),
-	require("user.plugins.autotag"),
-	require("user.plugins.autopairs"),
+
+	-- editor utils -> auto tags and pairs
+	require("user.plugins.editor"),
 
 	-- Toggleeterm
 	require("user.plugins.toggleterm"),
@@ -45,14 +46,12 @@ return require("lazy").setup({
 
 	-- lsp
 	require("user.plugins.lsp"),
-	require("user.plugins.lspsaga"),
 
 	-- navigation -> neotree, telescope, projects
 	require("user.plugins.navigation"),
 
-	-- Key binding helper
-	require("user.plugins.whichkey"),
-	require("user.plugins.showkeys"),
+	-- Key binding helper and show
+	require("user.plugins.keys"),
 
 	-- tabs
 	require("user.plugins.bufferline"),
