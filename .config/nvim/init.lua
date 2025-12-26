@@ -27,7 +27,16 @@ local function safe_require(module)
 	return result
 end
 
--- Then use it for loading modules
--- local treesitter = safe_require("user.plugins.treesitter")
+-- mason and rust config
+local rt = require("rust-tools")
 
--- require("mason").setup()
+rt.setup({
+	server = {
+		on_attach = function(_, bufnr)
+			-- Hover actions
+			vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+			-- Code action groups
+			vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+		end,
+	},
+})
