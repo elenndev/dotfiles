@@ -129,21 +129,11 @@ return {
 		end,
 	},
 	{
-		"simrat39/rust-tools.nvim",
-		ft = "rust",
-		dependencies = { "neovim/nvim-lspconfig" },
-		config = function()
-			local rt = require("rust-tools")
-			rt.setup({
-				server = {
-					on_attach = function(_, bufnr)
-						local opts = { buffer = bufnr, silent = true }
-						vim.keymap.set("n", "<leader>ca", rt.hover_actions.hover_actions, opts)
-						vim.keymap.set("n", "<leader>rr", rt.runnables.runnables, opts)
-						vim.keymap.set("n", "<leader>dd", rt.debuggables.debuggables, opts)
-					end,
-				},
-			})
-		end,
+		{ "rust-lang/rust.vim" },
+		{
+			"mrcjkb/rustaceanvim",
+			version = "^3",
+			ft = { "rust" },
+		},
 	},
 }
