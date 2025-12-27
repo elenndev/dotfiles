@@ -25,6 +25,11 @@ return {
 				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 				dashboard.button("f", "󰈞  Find file", ":Telescope find_files<CR>"),
 				dashboard.button("r", "󰄉  Recent", ":Telescope oldfiles<CR>"),
+				dashboard.button(
+					"c",
+					"  Config",
+					":Telescope find_files cwd=" .. vim.fn.stdpath("config") .. "<CR>"
+				),
 				dashboard.button("q", "  Quit", ":qa<CR>"),
 			}
 
@@ -152,7 +157,7 @@ return {
 					-- line numbers
 					{ text = { builtin.lnumfunc }, click = nil, colwidth = 2 },
 
-					-- other signs (Git, LSP, etc.)
+					-- other signs (Git, LSP, ...)
 					{
 						sign = { name = { ".*" }, maxwidth = 2, colwidth = 2, auto = true, wrap = true },
 						click = nil,
