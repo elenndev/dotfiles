@@ -17,16 +17,23 @@ return {
 			-- custom terminals api
 			local Terminal = require("toggleterm.terminal").Terminal
 
+			local float_term = Terminal:new({
+				direction = "float",
+				size = 50,
+				hidden = true,
+				start_in_insert = true,
+			})
+
 			local vertical_term = Terminal:new({
 				direction = "vertical",
 				size = 40,
-				hidden = false,
+				hidden = true,
 				start_in_insert = true,
 			})
 
 			local horizontal_term = Terminal:new({
 				direction = "horizontal",
-				hidden = false,
+				hidden = true,
 				start_in_insert = true,
 			})
 
@@ -36,12 +43,16 @@ return {
 					width = vim.o.columns,
 					height = 100,
 				},
-				hidden = false,
+				hidden = true,
 				start_in_insert = true,
 				cmd = "lazygit",
 			})
 
 			-- keymaps fo custom terminals
+			vim.keymap.set("n", "<leader>tf", function()
+				float_term:toggle()
+			end, { desc = "Open float terminal" })
+
 			vim.keymap.set("n", "<leader>th", function()
 				horizontal_term:toggle()
 			end, { desc = "Open horizontal terminal" })
@@ -54,6 +65,23 @@ return {
 			vim.keymap.set("n", "<leader>tl", function()
 				lazygit_float_term:toggle()
 			end, { desc = "Open lazygit on float terminal" })
+
+			-- toggle terminal
+			local function close_active_terminal()
+				if vim.bo.buftype ~= "terminal" then
+					return
+				end
+
+				if vim.fn.mode() == "t" then
+					vim.cmd("stopinsert")
+				end
+
+				vim.cmd("q")
+			end
+
+			vim.keymap.set("t", "<C-\\><C-n>", close_active_terminal, { desc = "Close terminal on Terminal mode" })
+
+			vim.keymap.set({ "n", "t" }, "<C-\\>", close_active_terminal, { desc = "Close terminal" })
 
 			vim.keymap.set("t", "<leader>tn", [[<C-\><C-n>]], { desc = "Go to Normal mode" })
 		end,
