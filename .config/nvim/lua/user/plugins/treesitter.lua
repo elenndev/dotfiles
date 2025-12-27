@@ -38,22 +38,18 @@ return {
 			},
 		})
 
-		vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-			callback = function(args)
-				local bufnr = args.buf
-				local lang = vim.api.nvim_buf_get_option(bufnr, "filetype")
-				if lang and vim.treesitter.highlighter.active[bufnr] then
-					vim.api.nvim_buf_set_option(bufnr, "foldmethod", "expr")
-					vim.api.nvim_buf_set_option(bufnr, "foldexpr", "nvim_treesitter#foldexpr()")
-					vim.api.nvim_buf_set_option(bufnr, "foldlevel", 99)
-					vim.api.nvim_buf_set_option(bufnr, "foldlevelstart", 99)
-					vim.api.nvim_buf_set_option(bufnr, "foldenable", true)
-				end
-				if lang == "rust" then
-					vim.opt_global.foldmethod = "expr"
-					vim.opt_global.foldexpr = "nvim_treesitter#foldexpr()"
-					vim.opt_local.foldenable = true
-				end
+		-- Tree-sitter folding como padrão
+		vim.opt.foldmethod = "expr"
+		vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+		vim.opt.foldlevel = 99
+		vim.opt.foldlevelstart = 99
+		vim.opt.foldenable = true
+
+		-- Rust usa indent folding (fallback)
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "rust",
+			callback = function()
+				vim.opt_local.foldmethod = "indent"
 			end,
 		})
 	end,
