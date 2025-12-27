@@ -38,18 +38,18 @@ return {
 			},
 		})
 
-		-- Tree-sitter folding como padrão
+		-- Tree-sitter folding as default
 		vim.opt.foldmethod = "expr"
 		vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 		vim.opt.foldlevel = 99
 		vim.opt.foldlevelstart = 99
 		vim.opt.foldenable = true
 
-		-- Rust usa indent folding (fallback)
+		-- Rust use indent folding
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "rust",
 			callback = function()
-				vim.opt_local.foldmethod = "indent"
+				vim.opt_local.foldmethod = "foldtext"
 			end,
 		})
 	end,

@@ -132,7 +132,7 @@ return {
 		{ "rust-lang/rust.vim" },
 		{
 			"mrcjkb/rustaceanvim",
-			version = "^3",
+			version = "^6",
 			ft = { "rust" },
 		},
 	},
