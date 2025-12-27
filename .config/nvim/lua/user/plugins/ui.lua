@@ -28,7 +28,7 @@ return {
 				dashboard.button(
 					"c",
 					"  Config",
-					":Telescope find_files cwd=" .. vim.fn.stdpath("config") .. "<CR>"
+					":cd " .. vim.fn.stdpath("config") .. " | Telescope find_files<CR>"
 				),
 				dashboard.button("q", "  Quit", ":qa<CR>"),
 			}
