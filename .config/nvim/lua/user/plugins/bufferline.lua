@@ -1,3 +1,10 @@
+local function hl_to_hex(hl, key)
+	if not hl or not hl[key] then
+		return nil
+	end
+	return string.format("#%06x", hl[key])
+end
+
 local function get_hl(name)
 	local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name })
 	if not ok then
@@ -6,11 +13,13 @@ local function get_hl(name)
 	return hl
 end
 
-local Normal = get_hl("Normal")
-local Comment = get_hl("Comment")
-local CursorLine = get_hl("CursorLine")
-local Identifier = get_hl("Identifier")
-local DiagnosticInfo = get_hl("DiagnosticInfo")
+local function fg(name)
+	return hl_to_hex(get_hl(name), "fg")
+end
+
+local function bg(name)
+	return hl_to_hex(get_hl(name), "bg")
+end
 
 return {
 	"akinsho/bufferline.nvim",
@@ -34,29 +43,35 @@ return {
 			},
 			highlights = {
 				fill = {
-					bg = Normal.bg,
+					bg = bg("Normal"),
 				},
 
 				-- inactive buffers
 				background = {
-					fg = Comment.fg or Normal.fg,
-					bg = Normal.bg,
+					fg = fg("Comment") or fg("Normal"),
+					bg = bg("Normal"),
 				},
 
-				-- active buffers
+				-- active buffer
 				buffer_selected = {
-					fg = Normal.fg,
+					fg = fg("Normal"),
+					bg = bg("CursorLine") or bg("Normal"),
 					bold = true,
 				},
 
 				-- separator
 				separator = {
-					fg = Comment.fg,
-					bg = Normal.bg,
+					fg = fg("Comment"),
+					bg = bg("Normal"),
 				},
 				separator_selected = {
-					fg = DiagnosticInfo.fg or Identifier.fg,
-					bg = Normal.bg,
+					fg = fg("DiagnosticInfo") or fg("Identifier"),
+					bg = bg("Normal"),
+				},
+
+				-- indicator
+				indicator_selected = {
+					fg = fg("DiagnosticInfo") or fg("Identifier"),
 				},
 			},
 		})
