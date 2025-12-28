@@ -1,3 +1,17 @@
+local function get_hl(name)
+	local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name })
+	if not ok then
+		return {}
+	end
+	return hl
+end
+
+local Normal = get_hl("Normal")
+local Comment = get_hl("Comment")
+local CursorLine = get_hl("CursorLine")
+local Identifier = get_hl("Identifier")
+local DiagnosticInfo = get_hl("DiagnosticInfo")
+
 return {
 	"akinsho/bufferline.nvim",
 	version = "*",
@@ -19,28 +33,30 @@ return {
 				color_icons = true,
 			},
 			highlights = {
+				fill = {
+					bg = Normal.bg,
+				},
+
+				-- inactive buffers
+				background = {
+					fg = Comment.fg or Normal.fg,
+					bg = Normal.bg,
+				},
+
+				-- active buffers
+				buffer_selected = {
+					fg = Normal.fg,
+					bold = true,
+				},
+
+				-- separator
 				separator = {
-					guifg = "#30363d",
-					guibg = "#0d1117",
+					fg = Comment.fg,
+					bg = Normal.bg,
 				},
 				separator_selected = {
-					guifg = "#58a6ff",
-					guibg = "#0d1117",
-				},
-				background = {
-					guifg = "#8b949e",
-					guibg = "#0d1117",
-				},
-				buffer_selected = {
-					guifg = "#c9d1d9",
-					guibg = "#161b22",
-					gui = "bold",
-				},
-				fill = {
-					guibg = "#0d1117",
-				},
-				modified = {
-					fg = "#d29922",
+					fg = DiagnosticInfo.fg or Identifier.fg,
+					bg = Normal.bg,
 				},
 			},
 		})
