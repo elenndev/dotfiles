@@ -84,6 +84,21 @@ return {
 			vim.keymap.set({ "n", "t" }, "<C-\\>", close_active_terminal, { desc = "Close terminal" })
 
 			vim.keymap.set("t", "<leader>tn", [[<C-\><C-n>]], { desc = "Go to Normal mode" })
+
+			-- terminate terminal
+			local function terminate_terminal()
+				if vim.bo.buftype ~= "terminal" then
+					return
+				end
+
+				if vim.fn.mode() == "t" then
+					vim.cmd("stopinsert")
+				end
+
+				vim.cmd("bd!")
+			end
+
+			vim.keymap.set({ "n" }, "<leader>td", terminate_terminal, { desc = "Terminate Terminal" })
 		end,
 	},
 }
