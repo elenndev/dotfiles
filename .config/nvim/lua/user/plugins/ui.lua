@@ -77,6 +77,10 @@ return {
 						require("formatter.filetypes.python").black,
 					},
 
+					rust = {
+						require("formatter.filetypes.rust").rustfmt,
+					},
+
 					["*"] = {
 						require("formatter.filetypes.any").remove_trailing_whitespace,
 					},
@@ -169,22 +173,22 @@ return {
 
 	-- Barbecue - breadcrumbs
 	-- not working fix later
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {
-			-- here your config
-			attach_navic = true, -- connect nvim-navic
-			show_dirname = true,
-			show_basename = true,
-			theme = "auto",
-		},
-	},
+	-- {
+	-- 	"utilyre/barbecue.nvim",
+	-- 	name = "barbecue",
+	-- 	version = "*",
+	-- 	dependencies = {
+	-- 		"SmiteshP/nvim-navic",
+	-- 		"nvim-tree/nvim-web-devicons", -- optional dependency
+	-- 	},
+	-- 	opts = {
+	-- 		-- here your config
+	-- 		attach_navic = true, -- connect nvim-navic
+	-- 		show_dirname = true,
+	-- 		show_basename = true,
+	-- 		theme = "auto",
+	-- 	},
+	-- },
 
 	-- indentation GUIDES
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
