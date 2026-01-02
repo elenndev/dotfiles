@@ -135,41 +135,50 @@ return {
 		end,
 	},
 
-	-- Status column with line numbers, folds, and signs
 	{
 		"luukvbaal/statuscol.nvim",
 		config = function()
-			vim.opt.number = true
-			vim.opt.relativenumber = true
-			vim.opt.numberwidth = 4
-			vim.opt.cursorline = true -- highlight current line
-
-			local builtin = require("statuscol.builtin")
 			require("statuscol").setup({
-				relculright = true, -- números relativos à direita
-
-				segments = {
-					-- fold column
-					{ text = { builtin.foldfunc }, click = nil },
-
-					-- diagnostic signs
-					{
-						sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
-						click = nil,
-					},
-
-					-- line numbers
-					{ text = { builtin.lnumfunc }, click = nil, colwidth = 2 },
-
-					-- other signs (Git, LSP, ...)
-					{
-						sign = { name = { ".*" }, maxwidth = 2, colwidth = 2, auto = true, wrap = true },
-						click = nil,
-					},
-				},
+				relculright = true,
 			})
 		end,
 	},
+
+	-- Status column with line numbers, folds, and signs
+	-- {
+	-- 	"luukvbaal/statuscol.nvim",
+	-- 	config = function()
+	-- 		vim.opt.number = true
+	-- 		vim.opt.relativenumber = true
+	-- 		vim.opt.numberwidth = 4
+	-- 		vim.opt.cursorline = true -- highlight current line
+	--
+	-- 		local builtin = require("statuscol.builtin")
+	-- 		require("statuscol").setup({
+	-- 			relculright = true, -- números relativos à direita
+	--
+	-- 			segments = {
+	-- 				-- fold column
+	-- 				{ text = { builtin.foldfunc }, click = nil },
+	--
+	-- 				-- diagnostic signs
+	-- 				{
+	-- 					sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
+	-- 					click = nil,
+	-- 				},
+	--
+	-- 				-- line numbers
+	-- 				{ text = { builtin.lnumfunc }, click = nil, colwidth = 2 },
+	--
+	-- 				-- other signs (Git, LSP, ...)
+	-- 				{
+	-- 					sign = { name = { ".*" }, maxwidth = 2, colwidth = 2, auto = true, wrap = true },
+	-- 					click = nil,
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
 	-- Barbecue - breadcrumbs
 	-- not working fix later
@@ -192,4 +201,15 @@ return {
 
 	-- indentation GUIDES
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+	vim.api.nvim_set_hl(0, "StatusColSeparator", {
+		fg = "#44475a",
+	}),
+
+	vim.api.nvim_set_hl(0, "StatusColLineNr", {
+		fg = "#6272a4",
+	}),
+
+	vim.api.nvim_set_hl(0, "StatusColGitSignsAdd", {
+		fg = "#7ad87a",
+	}),
 }
