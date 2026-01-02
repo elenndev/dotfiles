@@ -43,13 +43,13 @@ return {
 			},
 			event = "BufReadPost",
 			config = function()
-				-- Opções globais de folding (OBRIGATÓRIAS pro ufo)
+				-- global fold stuff
 				vim.o.foldcolumn = "1"
 				vim.o.foldlevel = 99
 				vim.o.foldlevelstart = 99
 				vim.o.foldenable = true
 
-				-- Keymaps padrão do ufo
+				-- ufo default Keymaps
 				vim.keymap.set("n", "zR", function()
 					require("ufo").openAllFolds()
 				end, { desc = "Open all folds" })
@@ -58,19 +58,30 @@ return {
 					require("ufo").closeAllFolds()
 				end, { desc = "Close all folds" })
 
-				-- Setup do ufo (ESTRATÉGIA IDEAL)
 				require("ufo").setup({
 					provider_selector = function(bufnr, filetype, buftype)
-						-- JSX / TSX / Rust: indent é o que funciona
+						-- JSX / TSX / Rust: indent
 						if filetype == "typescriptreact" or filetype == "javascriptreact" or filetype == "rust" then
 							return { "indent" }
 						end
 
-						-- resto: treesitter primeiro, indent fallback
+						-- first treesitter, indent fallback
 						return { "treesitter", "indent" }
 					end,
 				})
 			end,
+		},
+	},
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {
+			sign = {
+				enabled = false,
+			},
 		},
 	},
 }
