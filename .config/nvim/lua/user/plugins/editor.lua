@@ -84,4 +84,7 @@ return {
 			},
 		},
 	},
+	{
+		"github/copilot.vim",
+	},
 }
