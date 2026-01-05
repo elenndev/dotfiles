@@ -1,6 +1,6 @@
 -- Initialize core settings first
--- require('user.options')
--- require('user.keymaps')
+require("user.plugins")
+require("user.keymaps")
 
 -- config leader key
 vim.g.mapleader = " " -- leader
@@ -8,7 +8,6 @@ vim.opt.clipboard = "unnamedplus"
 
 -- Load plugin manager
 require("user.options")
-require("user.plugins")
 
 -- Basic error handling wrapper for module loading
 local function safe_require(module)
