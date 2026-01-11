@@ -9,7 +9,9 @@ return {
 				show_count = false,
 			})
 
-			vim.cmd("ShowkeysToggle")
+			vim.defer_fn(function()
+				vim.cmd("ShowkeysToggle")
+			end, 100)
 		end,
 	},
 

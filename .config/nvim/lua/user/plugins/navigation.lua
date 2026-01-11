@@ -24,6 +24,20 @@ return {
 						["<CR>"] = "open",
 						["v"] = "open_vsplit",
 						["s"] = "open_split",
+						["Y"] = function(state)
+							local node = state.tree:get_node()
+							local absolute_path = node:get_id()
+							local relative_path = vim.fn.fnamemodify(absolute_path, ":.")
+							vim.fn.setreg("+", relative_path)
+							vim.notify(relative_path, vim.log.levels.INFO)
+						end,
+						["O"] = function(state)
+							local node = state.tree:get_node()
+							local path = node:get_id()
+							local dir = vim.fn.isdirectory(path) == 1 and path or vim.fn.fnamemodify(path, ":h")
+
+							vim.fn.jobstart({ "xdg-open", dir }, { detach = true })
+						end,
 					},
 				},
 				sources = { "filesystem", "buffers", "git_status" },
