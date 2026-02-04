@@ -11,6 +11,7 @@ return {
 		ts_configs.setup({
 			ensure_installed = {
 				"lua",
+				"http",
 				"vim",
 				"vimdoc",
 				"javascript",

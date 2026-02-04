@@ -26,6 +26,8 @@ return require("lazy").setup({
 	-- editor utils -> auto tags and pairs
 	require("user.plugins.editor"),
 
+	require("user.plugins.restnvim"),
+
 	-- Toggleeterm
 	require("user.plugins.toggleterm"),
 
