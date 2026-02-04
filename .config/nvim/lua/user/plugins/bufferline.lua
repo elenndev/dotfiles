@@ -78,6 +78,6 @@ return {
 
 		vim.keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { silent = true })
 		vim.keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { silent = true })
-		vim.keymap.set("n", "<leader>b", ":bd<CR>", { silent = true })
+		vim.keymap.set("n", "<leader>b", ":bd<CR>", { silent = true, desc = "Close buffer" })
 	end,
 }
