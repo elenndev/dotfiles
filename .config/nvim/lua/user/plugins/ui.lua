@@ -164,4 +164,10 @@ return {
 	vim.api.nvim_set_hl(0, "StatusColGitSignsAdd", {
 		fg = "#7ad87a",
 	}),
+
+	-- progress UI, restnvim use this
+	{
+		"j-hui/fidget.nvim",
+		opts = {},
+	},
 }
