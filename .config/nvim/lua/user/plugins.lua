@@ -26,8 +26,6 @@ return require("lazy").setup({
 	-- editor utils -> auto tags and pairs
 	require("user.plugins.editor"),
 
-	require("user.plugins.restnvim"),
-
 	-- Toggleeterm
 	require("user.plugins.toggleterm"),
 
@@ -52,6 +50,9 @@ return require("lazy").setup({
 
 	-- navigation -> neotree, telescope, projects
 	require("user.plugins.navigation"),
+
+	-- http
+	require("user.plugins.restnvim"),
 
 	-- Key binding helper and show
 	require("user.plugins.keys"),
