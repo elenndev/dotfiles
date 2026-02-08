@@ -7,6 +7,7 @@ return {
 		"j-hui/fidget.nvim",
 		"nvim-telescope/telescope.nvim",
 	},
+
 	build = false, -- disable luarocks http install is treesitter job
 	config = function()
 		require("rest-nvim").setup({
@@ -15,6 +16,14 @@ return {
 				enabled = true,
 			},
 			result = {
+				formatters = {
+					json = {
+						cmd = "jq",
+						args = { "." },
+						use_stdin = true,
+					},
+				},
+				formatters_on = "body",
 				show_headers = true,
 				show_http_info = true,
 			},

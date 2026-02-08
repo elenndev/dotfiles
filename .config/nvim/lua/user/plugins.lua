@@ -69,4 +69,7 @@ return require("lazy").setup({
 
 	-- git
 	require("user.plugins.git"),
+
+	-- debug
+	require("user.plugins.debug"),
 })
