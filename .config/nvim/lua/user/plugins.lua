@@ -53,6 +53,7 @@ return require("lazy").setup({
 
 	-- http
 	require("user.plugins.restnvim"),
+	require("user.plugins.kulala"),
 
 	-- Key binding helper and show
 	require("user.plugins.keys"),
