@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+LOCAL_DIR="$HOME/obsidial-vaults/core"
+REMOTE_DIR="drive:Obsidian"
+
+rclone sync "$LOCAL_DIR" "$REMOTE_DIR" \
+  --progress \
+  --fast-list \
+  --transfers=4 \
+  --checkers=8 \
+  --delete-excluded \
+  --exclude ".git/**" \
+  --exclude "node_modules/**" \
+  --exclude ".env" \
+  --log-file="$HOME/rclone-sync.log" \
+  --log-level INFO
+
+"$@"

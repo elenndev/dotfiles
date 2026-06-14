@@ -52,7 +52,6 @@ return require("lazy").setup({
 	require("user.plugins.navigation"),
 
 	-- http
-	require("user.plugins.restnvim"),
 	require("user.plugins.kulala"),
 
 	-- Key binding helper and show
