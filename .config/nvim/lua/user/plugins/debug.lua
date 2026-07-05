@@ -11,8 +11,7 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 		dapui.setup()
-		vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
-		vim.keymap.set("n", "<Leader>dc", dap.continue, { desc = "dap continue" })
+
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
 		end
@@ -25,6 +24,57 @@ return {
 		dap.listeners.before.event_exited.dapui_config = function()
 			dapui.close()
 		end
+
+		vim.keymap.set("n", "<leader>dt", function()
+			dap.toggle_breakpoint()
+		end, { desc = "Toggle Breakpoint" })
+
+		vim.keymap.set("n", "<leader>dc", function()
+			dap.continue()
+		end, { desc = "Continue" })
+
+		vim.keymap.set("n", "<leader>di", function()
+			dap.step_into()
+		end, { desc = "Step Into" })
+
+		vim.keymap.set("n", "<leader>do", function()
+			dap.step_over()
+		end, { desc = "Step Over" })
+
+		vim.keymap.set("n", "<leader>du", function()
+			dap.step_out()
+		end, { desc = "Step Out" })
+
+		vim.keymap.set("n", "<leader>dr", function()
+			dap.repl.open()
+		end, { desc = "Open REPL" })
+
+		vim.keymap.set("n", "<leader>dq", function()
+			dap.terminate()
+			dapui.close()
+		end, { desc = "Terminate" })
+
+		-- c
+		local dap = require("dap")
+
+		dap.adapters.gdb = {
+			type = "executable",
+			command = "gdb",
+			args = { "-i", "dap" },
+		}
+
+		dap.configurations.c = {
+			{
+				name = "Launch C program",
+				type = "gdb",
+				request = "launch",
+				program = function()
+					return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/main", "file")
+				end,
+				cwd = "${workspaceFolder}",
+				stopAtBeginningOfMainSubprogram = true,
+			},
+		}
 
 		-- rust
 		dap.adapters.cppdbg = {

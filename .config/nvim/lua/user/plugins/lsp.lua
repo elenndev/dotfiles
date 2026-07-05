@@ -67,6 +67,9 @@ return {
 				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 			end
 
+			-- C
+			require("lspconfig").clangd.setup({})
+
 			-- LUA
 			vim.lsp.config.lua_ls = {
 				capabilities = capabilities,
