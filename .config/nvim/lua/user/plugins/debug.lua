@@ -33,6 +33,22 @@ return {
 			dap.continue()
 		end, { desc = "Continue" })
 
+		vim.keymap.set("n", "<leader>dw", function()
+			local expr = vim.fn.expand("<cexpr>")
+			local watches = require("dapui").elements.watches
+
+			--
+			local ok_remove = pcall(watches.remove, expr)
+
+			if not ok_remove then
+				watches.add(expr)
+			end
+		end, { desc = "Toggle watch" })
+
+		vim.keymap.set("n", "<leader>de", function()
+			require("dapui").eval()
+		end, { desc = "Evaluate expression" })
+
 		vim.keymap.set("n", "<leader>di", function()
 			dap.step_into()
 		end, { desc = "Step Into" })
@@ -57,22 +73,24 @@ return {
 		-- c
 		local dap = require("dap")
 
-		dap.adapters.gdb = {
-			type = "executable",
-			command = "gdb",
-			args = { "-i", "dap" },
+		dap.adapters.codelldb = {
+			type = "server",
+			port = "${port}",
+			executable = {
+				command = "codelldb",
+				args = { "--port", "${port}" },
+			},
 		}
-
 		dap.configurations.c = {
 			{
-				name = "Launch C program",
-				type = "gdb",
+				name = "Debug C",
+				type = "codelldb",
 				request = "launch",
 				program = function()
-					return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/main", "file")
+					return vim.fn.input("Executable: ", vim.fn.getcwd() .. "/", "file")
 				end,
 				cwd = "${workspaceFolder}",
-				stopAtBeginningOfMainSubprogram = true,
+				stopOnEntry = true,
 			},
 		}
 
