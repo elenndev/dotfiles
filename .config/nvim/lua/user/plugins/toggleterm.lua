@@ -79,9 +79,10 @@ return {
 				vim.cmd("q")
 			end
 
-			vim.keymap.set("t", "<C-\\><C-n>", close_active_terminal, { desc = "Close terminal on Terminal mode" })
+			-- vim.keymap.set("t", "<C-\\><C-n>", close_active_terminal, { desc = "Close terminal on Terminal mode" })
+			vim.keymap.set({ "t", "n" }, "<C-d>", close_active_terminal, { desc = "Close terminal" })
 
-			vim.keymap.set({ "n", "t" }, "<C-\\>", close_active_terminal, { desc = "Close terminal" })
+			-- vim.keymap.set({ "n", "t" }, "<C-\\>", close_active_terminal, { desc = "Close terminal" })
 
 			vim.keymap.set("t", "<leader>tn", [[<C-\><C-n>]], { desc = "Go to Normal mode" })
 
@@ -98,7 +99,7 @@ return {
 				vim.cmd("bd!")
 			end
 
-			vim.keymap.set({ "n" }, "<leader>td", terminate_terminal, { desc = "Terminate Terminal" })
+			vim.keymap.set({ "n" }, "<leader>te", terminate_terminal, { desc = "Terminate Terminal" })
 		end,
 	},
 }
