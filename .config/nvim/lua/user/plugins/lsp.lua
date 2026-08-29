@@ -3,229 +3,203 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 
 if ok then
-	capabilities = cmp_lsp.default_capabilities(capabilities)
+  capabilities = cmp_lsp.default_capabilities(capabilities)
 end
 
 local function on_attach(_, bufnr)
-	local opts = { buffer = bufnr, silent = true }
+  local opts = { buffer = bufnr, silent = true }
 
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	vim.keymap.set("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", opts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 end
 
 return {
-	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp",
-		},
-		event = { "BufReadPre", "BufNewFile" },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+    },
+    event = { "BufReadPre", "BufNewFile" },
 
-		config = function()
-			-- Mason
-			require("mason").setup()
+    config = function()
+      -- Mason
+      require("mason").setup()
 
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"ts_ls",
-					"pyright",
-					"dockerls",
-					"clangd",
-					"bashls",
-					"eslint",
-				},
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "pyright",
+          "dockerls",
+          "clangd",
+          "bashls",
+          "eslint",
+        },
 
-				automatic_enable = {
-					exclude = {
-						"rust_analyzer",
-					},
-				},
-			})
+        automatic_enable = {
+          exclude = {
+            "rust_analyzer",
+          },
+        },
+      })
 
-			-- Capabilities
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- Capabilities
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-			local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+      local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 
-			if ok then
-				capabilities = cmp_lsp.default_capabilities(capabilities)
-			end
+      if ok then
+        capabilities = cmp_lsp.default_capabilities(capabilities)
+      end
 
-			-- Keymaps on attach
-			local function on_attach(_, bufnr)
-				local opts = { buffer = bufnr, silent = true }
+      -- Keymaps on attach
+      local function on_attach(_, bufnr)
+        local opts = { buffer = bufnr, silent = true }
 
-				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-				-- code actions
-				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-			end
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+      end
 
-			-- C
-			require("lspconfig").clangd.setup({})
+      -- LUA
+      vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
+        on_attach = on_attach,
 
-			-- LUA
-			vim.lsp.config.lua_ls = {
-				capabilities = capabilities,
-				on_attach = on_attach,
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
 
-				settings = {
-					Lua = {
-						runtime = {
-							version = "LuaJIT",
-						},
+            diagnostics = {
+              globals = { "vim" },
+            },
 
-						diagnostics = {
-							globals = { "vim" },
-						},
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
 
-						workspace = {
-							library = vim.api.nvim_get_runtime_file("", true),
-							checkThirdParty = false,
-						},
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
 
-						telemetry = {
-							enable = false,
-						},
-					},
-				},
-			}
+      -- BASH
+      vim.lsp.config("bashls", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        filetypes = { "sh", "bash", "zsh" },
+      })
 
-			-- BASH
-			vim.lsp.config.bashls = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-				filetypes = { "sh", "bash", "zsh" },
-			}
+      -- TYPESCRIPT
+      vim.lsp.config("ts_ls", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
 
-			-- TYPESCRIPT
-			vim.lsp.config.ts_ls = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}
+      -- ESLINT
+      vim.lsp.config("eslint", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
 
-			-- ESLINT
-			vim.lsp.config.eslint = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}
+      -- PYTHON
+      vim.lsp.config("pyright", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
 
-			-- PYTHON
-			vim.lsp.config.pyright = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}
+      -- DOCKER
+      vim.lsp.config("dockerls", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
 
-			-- RUST
-			-- vim.lsp.config.rust_analyzer = {
-			-- 	capabilities = capabilities,
-			-- 	on_attach = on_attach,
-			-- }
+      -- C/C++
+      vim.lsp.config("clangd", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
 
-			-- DOCKER
-			vim.lsp.config.dockerls = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}
+      -- Enable LSPs
+      vim.lsp.enable("lua_ls")
+      vim.lsp.enable("bashls")
+      vim.lsp.enable("ts_ls")
+      vim.lsp.enable("pyright")
+      vim.lsp.enable("dockerls")
+      vim.lsp.enable("clangd")
+      vim.lsp.enable("eslint")
 
-			-- C/C++
-			vim.lsp.config.clangd = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}
+      -- Diagnostics UI
+      vim.diagnostic.config({
+        virtual_text = true,
+        float = {
+          border = "rounded",
+        },
+        signs = true,
+      })
+    end,
+  },
 
-			-- vim.api.nvim_create_autocmd("FileType", {
-			-- 	callback = function(args)
-			-- 		local server = vim.lsp.config[vim.bo[args.buf].filetype]
-			--
-			-- 		if server then
-			-- 			vim.lsp.start(server)
-			-- 		end
-			-- 	end,
-			-- })
+  {
+    "nvimdev/lspsaga.nvim",
 
-			vim.lsp.enable("lua_ls")
-			vim.lsp.enable("bashls")
-			vim.lsp.enable("ts_ls")
-			vim.lsp.enable("pyright")
-			vim.lsp.enable("dockerls")
-			vim.lsp.enable("clangd")
-			vim.lsp.enable("eslint")
+    event = "LspAttach",
 
-			-- Diagnostics UI
-			vim.diagnostic.config({
-				virtual_text = true,
-				float = {
-					border = "rounded",
-				},
-				signs = true,
-			})
-		end,
-	},
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
 
-	{
-		"nvimdev/lspsaga.nvim",
+    config = function()
+      local ok, saga = pcall(require, "lspsaga")
 
-		event = "LspAttach",
+      if not ok then
+        return
+      end
 
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
+      saga.setup({
+        server_filetype_map = {
+          typescript = "typescript",
+        },
 
-		config = function()
-			local ok, saga = pcall(require, "lspsaga")
+        lightbulb = {
+          enable = false,
+        },
+      })
 
-			if not ok then
-				return
-			end
+      local opts = {
+        noremap = true,
+        silent = true,
+      }
 
-			saga.setup({
-				server_filetype_map = {
-					typescript = "typescript",
-				},
+      vim.keymap.set("n", "<C-j>", "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
+      -- vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
+      vim.keymap.set("n", "K", vim.lsp.buf.hover)
+      vim.keymap.set("n", "gd", "<Cmd>Lspsaga lsp_finder<CR>", opts)
+      vim.keymap.set("i", "<C-k>", "<Cmd>Lspsaga signature_help<CR>", opts)
+      vim.keymap.set("n", "gp", "<Cmd>Lspsaga preview_definition<CR>", opts)
+      vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
+    end,
+  },
 
-				lightbulb = {
-					enable = false,
-				},
-			})
-
-			local opts = {
-				noremap = true,
-				silent = true,
-			}
-
-			vim.keymap.set("n", "<C-j>", "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
-
-			vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
-
-			vim.keymap.set("n", "gd", "<Cmd>Lspsaga lsp_finder<CR>", opts)
-
-			vim.keymap.set("i", "<C-k>", "<Cmd>Lspsaga signature_help<CR>", opts)
-
-			vim.keymap.set("n", "gp", "<Cmd>Lspsaga preview_definition<CR>", opts)
-
-			vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
-		end,
-	},
-
-	{
-
-		{
-			"mrcjkb/rustaceanvim",
-			version = "^6",
-			ft = { "rust" },
-			opts = {
-				server = {
-					on_attach = on_attach,
-					capabilities = capabilities,
-				},
-			},
-		},
-	},
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^6",
+    ft = { "rust" },
+    opts = {
+      server = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      },
+    },
+  },
 }
