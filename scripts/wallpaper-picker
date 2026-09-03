@@ -16,12 +16,12 @@ while read -r wallpaper; do
     thumbnail="$THUMB_DIR/$filename"
 
     magick "$wallpaper" \
-        -thumbnail 400x250^ \
+        -thumbnail '400x250^' \
         -gravity center \
         -extent 400x250 \
         "$thumbnail"
 
-    printf '%s\0icon\x1f%s\0' "$filename" "$thumbnail"
+    printf '%s\0icon\x1f%s\n' "$filename" "$thumbnail"
 done |
 rofi -dmenu \
     -show-icons \
@@ -41,7 +41,10 @@ rofi -dmenu \
             columns: 3;
             lines: 2;
             spacing: 10px;
-            fixed-height: false;
+            fixed-height: true;
+
+            cycle: true;
+            dynamic: true;
         }
 
         element {
@@ -55,9 +58,7 @@ rofi -dmenu \
         }
 
         element-icon {
-            size: 400px;
-            vertical-align: 0.5;
-            horizontal-align: 0.5;
+            size: 250px;
         }
     ' |
 while read -r selected; do
