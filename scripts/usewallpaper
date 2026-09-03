@@ -1,0 +1,66 @@
+#!/bin/bash
+
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+
+mapfile -t wallpapers < <(
+    find "$WALLPAPER_DIR" -type f \
+        \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) \
+        ! -iname "default.jpg" \
+        ! -iname "default.jpeg" \
+        ! -iname "default.png" \
+        ! -iname "default.webp" \
+        | sort
+)
+
+# usewallpaper default
+if [ "$1" = "default" ]; then
+    default_wallpaper=$(find "$WALLPAPER_DIR" -type f \
+        \( -iname "default.jpg" -o -iname "default.jpeg" -o -iname "default.png" -o -iname "default.webp" \) \
+        | sort | head -n 1)
+
+    if [ -z "$default_wallpaper" ]; then
+        echo "Error: default wallpaper not found."
+        exit 1
+    fi
+
+    echo "Using default: ${default_wallpaper#$WALLPAPER_DIR/}"
+
+    swww img "$default_wallpaper" --resize crop
+    exit 0
+fi
+
+# usewallpaper
+if [ -z "$1" ]; then
+    echo "Wallpapers:"
+    echo
+
+    for i in "${!wallpapers[@]}"; do
+        printf "%2d) %s\n" "$((i + 1))" "${wallpapers[$i]#$WALLPAPER_DIR/}"
+    done
+
+    echo
+    echo "Usage: usewallpaper <number>"
+    echo "       usewallpaper default"
+    exit 0
+fi
+
+# Validate number
+if ! [[ "$1" =~ ^[0-9]+$ ]]; then
+    echo "Error: invalid option: $1"
+    echo
+    echo "Use a number or 'default'."
+    exit 1
+fi
+
+index=$((10#$1 - 1))
+
+if [ "$index" -lt 0 ] || [ "$index" -ge "${#wallpapers[@]}" ]; then
+    echo "Error: wallpaper $1 does not exist."
+    exit 1
+fi
+
+wallpaper="${wallpapers[$index]}"
+
+echo "Using: ${wallpaper#$WALLPAPER_DIR/}"
+
+swww img "$wallpaper" --resize crop

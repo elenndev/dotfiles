@@ -1,0 +1,65 @@
+#!/bin/bash
+
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+THUMB_DIR="$HOME/.cache/wallpaper-thumbnails"
+
+mkdir -p "$THUMB_DIR"
+
+find "$WALLPAPER_DIR" -type f \( \
+    -iname "*.png" -o \
+    -iname "*.jpg" -o \
+    -iname "*.jpeg" -o \
+    -iname "*.webp" \
+\) |
+while read -r wallpaper; do
+    filename=$(basename "$wallpaper")
+    thumbnail="$THUMB_DIR/$filename"
+
+    magick "$wallpaper" \
+        -thumbnail 400x250^ \
+        -gravity center \
+        -extent 400x250 \
+        "$thumbnail"
+
+    printf '%s\0icon\x1f%s\n' "$filename" "$thumbnail"
+done |
+rofi -dmenu \
+    -show-icons \
+    -p "Wallpaper" \
+    -theme-str '
+        window {
+            width: 80%;
+            height: 80%;
+        }
+
+        mainbox {
+            children: [ inputbar, listview ];
+        }
+
+        listview {
+            columns: 3;
+            lines: 2;
+            spacing: 20px;
+            fixed-height: false;
+        }
+
+        element {
+            orientation: vertical;
+            padding: 8px;
+            spacing: 8px;
+        }
+
+        element-icon {
+            size: 300px;
+        }
+
+        element-text {
+            horizontal-align: 0.5;
+            font: "JetBrainsMono Nerd Font 9";
+        }
+    ' |
+while read -r selected; do
+    [ -z "$selected" ] && exit 0
+
+    swww img "$WALLPAPER_DIR/$selected"
+done

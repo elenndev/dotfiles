@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#tf i was doing here
+CURRENT=$(hyprctl hyprpaper listactive)
+
+if [[ "$CURRENT" == *"picture01.png"* ]]; then
+    hyprctl hyprpaper wallpaper "~/Pictures/Wallpapers/picture01.png"
+else
+    hyprctl hyprpaper wallpaper "~/Pictures/Wallpapers/picture01.png"
+fi
