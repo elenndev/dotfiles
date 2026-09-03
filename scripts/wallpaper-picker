@@ -21,7 +21,7 @@ while read -r wallpaper; do
         -extent 400x250 \
         "$thumbnail"
 
-    printf '%s\0icon\x1f%s\n' "$filename" "$thumbnail"
+    printf '%s\0icon\x1f%s\0' "$filename" "$thumbnail"
 done |
 rofi -dmenu \
     -show-icons \
@@ -47,6 +47,11 @@ rofi -dmenu \
             orientation: vertical;
             padding: 8px;
             spacing: 8px;
+
+            children: [
+                element-icon,
+                element-text
+            ];
         }
 
         element-icon {
