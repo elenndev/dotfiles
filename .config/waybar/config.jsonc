@@ -7,8 +7,7 @@
     "margin-right": 10,
 
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["network", "pulseaudio", "battery", "clock#date", "custom/keyboard"],    "hyprland/workspaces": {
+    "modules-right": ["clock#time","clock#date", "network", "pulseaudio", "battery", "custom/keyboard"],    "hyprland/workspaces": {
         "format": "{name}",
         "persistent-workspaces": {"*": 0},
         "all-outputs": false,
@@ -16,7 +15,7 @@
         "sort-by-number": true
     },
 
-    "clock": {
+    "clock#time": {
         "format": "{:%H:%M}",
         "tooltip": false
     },

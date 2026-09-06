@@ -18,30 +18,23 @@ window#waybar {
 }
 
 .modules-left,
-.modules-center,
 .modules-right {
     border: none;
     border-radius: 0;
-    padding: 0 6px;
+    padding: 0 16px;
 }
 
-.modules-center {
-    padding: 0 14px;
-}
-
-.modules-right {
+.modules-right, #workspaces {
   background: @bg;
   color: @foreground;
-  padding: 0 8px;
 }
+
 
 #workspaces {
     padding: 0;
 }
 
 #workspaces button {
-    color: @foreground-muted;
-    background: @bg-muted;
     border: none;
     border-radius: 0px;
     padding: 0 5px;
@@ -61,21 +54,9 @@ window#waybar {
     border-radius: 0px;
 }
 
-#clock {
-    color: @foreground;
-    padding:  0px 10px;
-}
-
-#clock:hover {
-    color:  @foreground;
-    background: @bg;
-}
-
-
-#network,
-#pulseaudio,
-#battery {
-    padding: 0 8px;
+#clock.date {
+  padding-right:  5px;
+  border-right: 1px solid alpha(@foreground-muted, 0.4);
 }
 
 #battery.warning {
