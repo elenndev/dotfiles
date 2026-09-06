@@ -1,0 +1,56 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "margin-top": 8,
+    "margin-left": 10,
+    "margin-right": 10,
+
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["network", "pulseaudio", "battery", "clock#date", "custom/keyboard"],    "hyprland/workspaces": {
+        "format": "{name}",
+        "persistent-workspaces": {"*": 0},
+        "all-outputs": false,
+        "disable-scroll": true,
+        "sort-by-number": true
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip": false
+    },
+
+    "clock#date": {
+        "format": "{:%d/%m}",
+        "tooltip": false
+    },
+
+    "network": {
+        "format-wifi": "󰤨  {essid}",
+        "format-ethernet": "󰈀  {ifname}",
+        "format-disconnected": "󰤭  offline",
+        "tooltip-format": "{ifname}\n{essid}\n{ipaddr}"
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰝟  muted",
+        "format-icons": ["󰕿", "󰖀", "󰕾"],
+        "scroll-step": 5,
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "pavucontrol"
+    },
+
+    "battery": {
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+        "states": {"warning": 25, "critical": 10}
+    },
+    "custom/keyboard": {
+      "exec": "~/.config/waybar/scripts/keyboard-layout.sh",
+      "interval": 1,
+      "tooltip": false
+    }
+}
