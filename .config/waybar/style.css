@@ -21,8 +21,16 @@ window#waybar {
 .modules-right {
     border: none;
     border-radius: 0;
+}
+
+.modules-right {
     padding: 0 16px;
 }
+.modules-left {
+    padding: 0;
+}
+
+
 
 .modules-right, #workspaces {
   background: @bg;
