@@ -26,15 +26,15 @@
     },
 
     "network": {
-        "format-wifi": "󰤨  {essid}",
-        "format-ethernet": "󰈀  {ifname}",
-        "format-disconnected": "󰤭  offline",
+        "format-wifi": "󰤨 {essid} |",
+        "format-ethernet": "󰈀 {ifname}",
+        "format-disconnected": "󰤭 offline",
         "tooltip-format": "{ifname}\n{essid}\n{ipaddr}"
     },
 
     "pulseaudio": {
-        "format": "{icon}  {volume}%",
-        "format-muted": "󰝟  muted",
+        "format": "{icon} {volume}% |",
+        "format-muted": "󰝟 muted",
         "format-icons": ["󰕿", "󰖀", "󰕾"],
         "scroll-step": 5,
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
@@ -42,8 +42,8 @@
     },
 
     "battery": {
-        "format": "{icon}  {capacity}%",
-        "format-charging": "󰂄  {capacity}%",
+        "format": "{icon} {capacity}% |",
+        "format-charging": "󰂄 {capacity}%",
         "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
         "states": {"warning": 25, "critical": 10}
     },
