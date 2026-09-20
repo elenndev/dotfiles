@@ -1,0 +1,19 @@
+configuration {
+    modi: "drun,run";
+
+    show-icons: true;
+
+    display-drun: "Applications";
+    display-run: "Run";
+
+    font: "JetBrainsMono Nerd Font 11";
+
+    drun-display-format: "{name}";
+    window-display-format: "{wname}";
+
+    disable-history: false;
+    sort: true;
+    matching: "normal";
+}
+
+@theme "visual"

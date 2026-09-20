@@ -1,0 +1,147 @@
+* {
+    font: "JetBrainsMono Nerd Font 11";
+
+    /* Base */
+    bg: rgba(17, 18, 20, 0.94);
+    bg-alt: rgba(27, 30, 34, 0.96);
+
+    /* Texto */
+    fg: #c7c9cc;
+    fg-muted: #777b82;
+    fg-secondary: #858a91;
+
+    /* Azul do Waybar */
+    blue: #6ea8e8;
+    blue-dark: #202936;
+    blue-border: #3d6590;
+
+    /* Estados */
+    hover: #1b1e22;
+    border: rgba(61, 101, 144, 0.75);
+}
+
+window {
+    width: 70%;
+
+    background-color: @bg;
+
+    border: 1px;
+    border-color: @border;
+    border-radius: 1px;
+
+    padding: 20px;
+}
+
+mainbox {
+    background-color: transparent;
+
+    children: [
+        inputbar,
+        mode-switcher,
+        listview
+    ];
+
+    spacing: 18px;
+}
+inputbar {
+    background-color: @bg-alt;
+
+    border-radius: 0px;
+
+    padding: 10px 14px;
+
+    children: [
+        prompt,
+        entry
+    ];
+}
+
+prompt {
+    background-color: transparent;
+
+    text-color: @blue;
+
+    padding: 0 8px 0 0;
+}
+
+entry {
+    background-color: transparent;
+
+    text-color: @fg;
+    placeholder: "Pesquisar...";
+    placeholder-color: @fg-muted;
+}
+
+listview {
+    background-color: transparent;
+
+    columns: 5;
+    lines: 2;
+
+    spacing: 12px;
+
+    cycle: true;
+    dynamic: true;
+}
+
+element {
+    background-color: transparent;
+
+    border-radius: 0px;
+
+    padding: 10px;
+
+    orientation: horizontal;
+
+    /* Mantém apenas o texto */
+    children: [
+        element-text
+    ];
+
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}
+
+element selected {
+    background-color: @blue-dark;
+
+    border: 1px;
+    border-color: @blue-border;
+}
+
+element-icon {
+    size: 20px;
+
+    background-color: transparent;
+}
+
+element-text {
+    background-color: transparent;
+
+    text-color: @fg;
+
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+
+    padding: 0;
+}
+
+mode-switcher {
+    background-color: transparent;
+    spacing: 0px;
+}
+
+button {
+    background-color: transparent;
+    text-color: @fg-muted;
+
+    padding: 8px 16px;
+}
+
+button selected {
+    background-color: @blue-dark;
+    text-color: @blue;
+
+    border: 1px;
+    border-color: @blue-border;
+}
