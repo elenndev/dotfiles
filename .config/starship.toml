@@ -1,6 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = '[ $username ❯ $directory $git_branch $character ](#111214 bg:#c7c9cc)'
+format = '[ $username ❯ $directory $git_branch ](#111214 bg:#c7c9cc)$line_break$character'
 
 [username]
 show_always = true
@@ -15,7 +15,11 @@ truncate_to_repo = false
 format = '$symbol $branch'
 symbol = '󰊢'
 
+[line_break]
+disabled = false
+
 [character]
 success_symbol = '❯'
 error_symbol = '❯'
 vimcmd_symbol = '❮'
+
