@@ -1,23 +1,12 @@
 #!/bin/bash
 
-sync-vault start
+SESSION="sync-vault"
 
-# SESSION="dev"
-#
-# if tmux has-session -t "$SESSION" 2>/dev/null; then
-#     tmux attach-session -t "$SESSION"
-#     exit 0
-# fi
-#
-# tmux new-session -d -s "$SESSION" -n main
-#
-# tmux send-keys -t "$SESSION:main.0" "fastfetch; exec bash" C-m
-#
-# tmux split-window -h -t "$SESSION:main"
-# tmux send-keys -t "$SESSION:main.1" "sync-vault start" C-m
-#
-# tmux select-pane -t "$SESSION:main.0"
-#
-# tmux attach-session -t "$SESSION"
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+    exec tmux attach-session -t "$SESSION"
+fi
 
-"$@"
+tmux new-session -d -s "$SESSION" -n main
+tmux send-keys -t "$SESSION:main.0" "sync-vault start" C-m
+
+exec tmux attach-session -t "$SESSION"
