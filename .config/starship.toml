@@ -1,0 +1,21 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = '[ $username ❯ $directory $git_branch $character ](#111214 bg:#c7c9cc)'
+
+[username]
+show_always = true
+format = '$user'
+
+[directory]
+format = '$path'
+truncation_length = 1
+truncate_to_repo = false
+
+[git_branch]
+format = '$symbol $branch'
+symbol = '󰊢'
+
+[character]
+success_symbol = '❯'
+error_symbol = '❯'
+vimcmd_symbol = '❮'
