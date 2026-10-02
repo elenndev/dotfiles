@@ -1,23 +1,19 @@
 * {
     font: "JetBrainsMono Nerd Font 11";
 
-    /* Base */
-    bg: rgba(17, 18, 20, 0.94);
-    bg-alt: rgba(27, 30, 34, 0.96);
+    /* Background */
+    bg: rgba(17, 18, 20, 0.8);
+    bg-surface: rgba(17, 18, 20, 1);
+    bg-muted: rgba(17, 18, 20, 0.3);
 
-    /* Texto */
+    /* Text */
     fg: #c7c9cc;
     fg-muted: #777b82;
-    fg-secondary: #858a91;
 
-    /* Azul do Waybar */
-    blue: #6ea8e8;
-    blue-dark: #202936;
-    blue-border: #3d6590;
-
-    /* Estados */
-    hover: #1b1e22;
-    border: rgba(61, 101, 144, 0.75);
+    /* Borders and states */
+    border: rgba(119, 123, 130, 0.4);
+    hover: rgba(17, 18, 20, 1);
+    selected: rgba(17, 18, 20, 1);
 }
 
 window {
@@ -43,8 +39,9 @@ mainbox {
 
     spacing: 18px;
 }
+
 inputbar {
-    background-color: @bg-alt;
+    background-color: @bg-surface;
 
     border-radius: 0px;
 
@@ -59,7 +56,7 @@ inputbar {
 prompt {
     background-color: transparent;
 
-    text-color: @blue;
+    text-color: @fg;
 
     padding: 0 8px 0 0;
 }
@@ -68,6 +65,7 @@ entry {
     background-color: transparent;
 
     text-color: @fg;
+
     placeholder: "Pesquisar...";
     placeholder-color: @fg-muted;
 }
@@ -93,7 +91,7 @@ element {
 
     orientation: horizontal;
 
-    /* Mantém apenas o texto */
+    /* Display only the text */
     children: [
         element-text
     ];
@@ -103,10 +101,10 @@ element {
 }
 
 element selected {
-    background-color: @blue-dark;
+    background-color: @selected;
 
     border: 1px;
-    border-color: @blue-border;
+    border-color: @fg-muted;
 }
 
 element-icon {
@@ -128,20 +126,23 @@ element-text {
 
 mode-switcher {
     background-color: transparent;
+
     spacing: 0px;
 }
 
 button {
     background-color: transparent;
+
     text-color: @fg-muted;
 
     padding: 8px 16px;
 }
 
 button selected {
-    background-color: @blue-dark;
-    text-color: @blue;
+    background-color: @selected;
+
+    text-color: @fg;
 
     border: 1px;
-    border-color: @blue-border;
+    border-color: @fg-muted;
 }
