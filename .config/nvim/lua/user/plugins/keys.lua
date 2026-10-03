@@ -42,7 +42,7 @@ return {
         ["<leader>e"] = { "<cmd>Neotree toggle<cr>", "Explorer" },
 
         ["<leader>f"] = { name = "File" },
-        ["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "Buffers" },
+        ["<leader>fb"] = { "Buffers" },
         ["<leader>fg"] = { "Grep" },
         ["<leader>fn"] = { "<cmd>enew<cr>", "New file" },
         ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Recent" },
