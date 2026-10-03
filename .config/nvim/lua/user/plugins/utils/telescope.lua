@@ -13,4 +13,16 @@ function M.find_files()
   })
 end
 
+function M.live_grep()
+  local cwd = vim.fn.getcwd()
+  local dotfiles_path = vim.fn.expand("~/dotfiles")
+
+  local is_dotfiles = cwd == dotfiles_path
+
+  require("telescope.builtin").live_grep({
+    cwd = cwd,
+    additional_args = is_dotfiles and { "--hidden", "--no-ignore" } or {},
+  })
+end
+
 return M

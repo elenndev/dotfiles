@@ -43,7 +43,7 @@ return {
 
         ["<leader>f"] = { name = "File" },
         ["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "Buffers" },
-        ["<leader>fg"] = { "<cmd>Telescope live_grep<cr>", "Grep" },
+        ["<leader>fg"] = { "Grep" },
         ["<leader>fn"] = { "<cmd>enew<cr>", "New file" },
         ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Recent" },
 
